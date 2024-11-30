@@ -98,7 +98,7 @@ export async function generateTypesForBase(baseId: string, outputPath: string): 
     autoNumber: "number",
     barcode: "string",  // Barcode as a string (typically alphanumeric)
     rating: "number",  // Rating is typically a numeric value
-    richText: "string",  // Treat rich text as string (could also be HTML, depending on the field content)
+    richText: "AirtableRichText",  // Treat rich text as string (could also be HTML, depending on the field content)
     duration: "string",  // Duration is typically a string representation (e.g., "P1Y2M3D")
     lastModifiedTime: "string",
     button: "string",  // Buttons are typically represented as strings
@@ -109,7 +109,7 @@ export async function generateTypesForBase(baseId: string, outputPath: string): 
   };
   
   // Initialize a variable to accumulate all the type definitions
-  let recapText = `// Base ID: ${baseId}\n// List of Tables: ${tables.map((t: any) => t.name).join(", ")}\n\n// This types file was generated automatically by the Airtable Types Generator on ${new Date().toLocaleString('en-GB', { timeZone: 'Europe/Paris' })}, Paris time\n\n// Imported Types\nimport { Attachment } from './Airtable-Filetypes';\n\n`;
+  let recapText = `// Base ID: ${baseId}\n// List of Tables: ${tables.map((t: any) => t.name).join(", ")}\n\n// This types file was generated automatically by the Airtable Types Generator on ${new Date().toLocaleString('en-GB', { timeZone: 'Europe/Paris' })}, Paris time\n\n// Imported Types\nimport { Attachment } from './Airtable-Filetypes';\n\ntype AirtableRichText = string;\n\n// Created types in this file:\n/*\n`;
   let allTypes = "";
 
   function getNestedType(field: any): string {
@@ -192,13 +192,13 @@ export async function generateTypesForBase(baseId: string, outputPath: string): 
     
     const typeDef = `export interface ${typeName} {\n${fields.join("\n")}\n}\n\n`; // Added double line break
     allTypes += typeDef; // Append the type definition to the accumulator
-    recapText += typeName + "\n"; // Add the type name to the recap text
+    recapText += `${typeName},\n`; // Add the type name to the recap text
   }
-  
+  recapText += "*/\n\n";
   // Write all the accumulated types into one file
   const outputFilePath = path.resolve(outputPath, `Airtable-${baseId}.d.ts`);
   console.log(`Writing all types to: ${outputFilePath}`);
-  await fs.writeFile(outputFilePath, recapText+"\n\n"+allTypes);
+  await fs.writeFile(outputFilePath, recapText+allTypes);
   
 }
 
