@@ -112,7 +112,7 @@ export async function generateTypesForBase(baseId: string, outputPath: string): 
   let recapText = `
   // This types file was generated automatically by the Airtable Types Generator on ${new Date().toLocaleString('fr-FR', { timeZone: 'Europe/Paris' })}, Paris time\n
   // Base ID: ${baseId}
-  // List of Tables: ${tables.map((t: any) => t.name).join("\n, ")}\n
+  // List of Tables: ${tables.map((t: any) => t.name).join(",\n// ")}\n
   import { Attachment } from './Airtable-Filetypes';\n\ntype AirtableRichText = string;\n
   // Created types in this file:\n/*
   `;
