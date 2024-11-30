@@ -114,7 +114,7 @@ export async function generateTypesForBase(baseId: string, outputPath: string): 
   // Base ID: ${baseId}
   // List of Tables: ${tables.map((t: any) => t.name).join(",\n// ")}\n
   import { Attachment } from './Airtable-Filetypes';\n\ntype AirtableRichText = string;\n
-  // Created types in this file:\n/*
+  /* Created types in this file:\n
   `;
   let allTypes = "";
 
