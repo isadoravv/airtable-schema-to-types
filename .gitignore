@@ -6,7 +6,7 @@ dist/
 
 # Configuration files with sensitive information
 at-types.config.json
-types/Airtable-app*
+types/*
 
 # Logs and debugging files
 npm-debug.log*

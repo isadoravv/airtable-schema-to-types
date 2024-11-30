@@ -199,7 +199,7 @@ export async function generateTypesForBase(baseId: string, outputPath: string): 
 // Base ID: ${baseId}
 /* Tables in this file:\n - ${tables.map((t: any) => t.name).join("\n - ")} */\n
 /* Created types in this file: ${typesCreated.join(",\n")}\n*/
-import { Attachment } from './Airtable-FieldTypes';\n\ntype AirtableRichText = string;
+import { Attachment, AirtableRichText } from './Airtable-FieldTypes';\n\n
 export type AirtableRecordResult_${baseId} = {
   id: string;
   createdTime: string;
@@ -220,6 +220,20 @@ export type AirtableRecordsResult_${baseId} = {
 export async function generateTypes(outputPath: string): Promise<void> {
   const config = await loadDefaultConfig();
   const { AIRTABLE_BASE_IDS } = config;
+
+  const outputFilePath = path.resolve(outputPath, `Airtable-FieldTypes.d.ts`);
+  await fs.writeFile(outputFilePath, `export interface Attachment {
+    id: string;
+    url: string;
+    filename: string;
+    size: number;
+    type: string;  // e.g., 'image/jpeg', 'application/pdf'
+    width?: number;  // Optional, if the attachment is an image
+    height?: number; // Optional, if the attachment is an image
+    thumbnails?: { [key: string]: { url: string, width: number, height: number } }; // Optional, image thumbnails
+}
+
+export type AirtableRichText = string;`);
   
   // Loop over each base ID and generate the type file for each base
   for (const baseId of AIRTABLE_BASE_IDS) {

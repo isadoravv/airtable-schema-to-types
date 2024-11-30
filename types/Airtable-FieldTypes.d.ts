@@ -7,5 +7,6 @@ export interface Attachment {
     width?: number;  // Optional, if the attachment is an image
     height?: number; // Optional, if the attachment is an image
     thumbnails?: { [key: string]: { url: string, width: number, height: number } }; // Optional, image thumbnails
-  }
-  
+}
+
+export type AirtableRichText = string;
