@@ -1,0 +1,22 @@
+# Node.js dependencies
+node_modules/
+
+# Compiled TypeScript output
+dist/
+
+# Configuration files with sensitive information
+at-types.config.json
+types/Airtable-app*
+
+# Logs and debugging files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Temporary files and OS-specific files
+.DS_Store
+Thumbs.db
+
+# IDE/project-specific files
+.vscode/
+*.swp
