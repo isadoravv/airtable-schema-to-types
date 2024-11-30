@@ -108,15 +108,8 @@ export async function generateTypesForBase(baseId: string, outputPath: string): 
     aiText: "string",  // AI-generated text as a string
   };
   
-  // Initialize a variable to accumulate all the type definitions
-  let recapText = `
-  // This types file was generated automatically by the Airtable Types Generator on ${new Date().toLocaleString('fr-FR', { timeZone: 'Europe/Paris' })}, Paris time\n
-  // Base ID: ${baseId}
-  // List of Tables: ${tables.map((t: any) => t.name).join(",\n// ")}\n
-  import { Attachment } from './Airtable-Filetypes';\n\ntype AirtableRichText = string;\n
-  /* Created types in this file:\n
-  `;
   let allTypes = "";
+  let typesCreated = [];
 
   function getNestedType(field: any): string {
     let baseType = 'any';  // Default type if not found
@@ -198,13 +191,30 @@ export async function generateTypesForBase(baseId: string, outputPath: string): 
     
     const typeDef = `export interface ${typeName} {\n${fields.join("\n")}\n}\n\n`; // Added double line break
     allTypes += typeDef; // Append the type definition to the accumulator
-    recapText += `${typeName},\n`; // Add the type name to the recap text
+    typesCreated.push(typeName);
   }
-  recapText += "*/\n\n";
+  // recapText += "*/\n\n";
+  let recapText = `
+// This types file was generated automatically by the Airtable Types Generator on ${new Date().toLocaleString('fr-FR', { timeZone: 'Europe/Paris' })}, Paris time\n
+// Base ID: ${baseId}
+/* Tables in this file:\n - ${tables.map((t: any) => t.name).join("\n - ")} */\n
+/* Created types in this file: ${typesCreated.join(",\n")}\n*/
+import { Attachment } from './Airtable-FieldTypes';\n\ntype AirtableRichText = string;
+export type AirtableRecordResult_${baseId} = {
+  id: string;
+  createdTime: string;
+  fields: ${typesCreated.join(" | ")}; 
+}
+export type AirtableRecordsResult_${baseId} = {
+    records: AirtableRecordResult_${baseId}[];
+}
+\n
+  `;
+
   // Write all the accumulated types into one file
   const outputFilePath = path.resolve(outputPath, `Airtable-${baseId}.d.ts`);
   console.log(`Writing all types to: ${outputFilePath}`);
-  await fs.writeFile(outputFilePath, recapText+allTypes);
+  await fs.writeFile(outputFilePath, recapText + allTypes);
   
 }
 
