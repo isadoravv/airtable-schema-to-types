@@ -66,7 +66,7 @@ By default, the types will be saved in the types directory. If you want to speci
 This command will generate TypeScript type definitions for the Airtable bases specified in the at-types.config.json file and save them in the specified directory.
 
 ## Configuration
-The configuration file (at-types.config.json) should contain the following fields:
+The configuration file *(at-types.config.json)* should contain the following fields:
 
 *AIRTABLE_TOKEN*: Your Airtable API key.
 

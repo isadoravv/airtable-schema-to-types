@@ -84,13 +84,13 @@ export async function generateTypesForBase(baseId: string, outputPath: string): 
     singleCollaborator: "string",  // Could be an ID or a collaborator name
     multipleCollaborators: "string[]",  // Array of IDs or names
     multipleRecordLinks: "string[]",  // Array of linked record IDs
-    date: "Date",
-    dateTime: "Date",
+    date: "string",
+    dateTime: "string",
     phoneNumber: "string",  // Treating phone numbers as strings for simplicity
     multipleAttachments: "Attachment[]",  // Array of attachment objects
     checkbox: "boolean",
     formula: "string",  // Treat formula as string or any (depending on the formula result)
-    createdTime: "Date",
+    createdTime: "string",
     rollup: "any",  // Rollup could return various types, such as number or string, so we use `any`
     count: "number",
     lookup: "any",  // Lookup can return various types based on the lookup field
@@ -100,7 +100,7 @@ export async function generateTypesForBase(baseId: string, outputPath: string): 
     rating: "number",  // Rating is typically a numeric value
     richText: "string",  // Treat rich text as string (could also be HTML, depending on the field content)
     duration: "string",  // Duration is typically a string representation (e.g., "P1Y2M3D")
-    lastModifiedTime: "Date",
+    lastModifiedTime: "string",
     button: "string",  // Buttons are typically represented as strings
     createdBy: "string",  // Created by could be a user ID or name
     lastModifiedBy: "string",  // Last modified by could be a user ID or name
