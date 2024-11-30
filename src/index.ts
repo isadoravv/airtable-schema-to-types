@@ -58,6 +58,11 @@ function getMultipleSelectType(choices: any[]): string {
   return `("${choices.map((choice: any) => choice.name).join('" | "')}")[]`;
 }
 
+const nameWithQuotesIfNeeded = (fieldName: string) => {
+  return !isAlphanumeric(fieldName) ? `"${fieldName}"` : fieldName;
+}
+
+
 export async function generateTypesForBase(baseId: string, outputPath: string): Promise<void> {
   const config = await loadDefaultConfig();
   const { AIRTABLE_TOKEN } = config;
@@ -111,6 +116,8 @@ export async function generateTypesForBase(baseId: string, outputPath: string): 
   let allTypes = "";
   let typesCreated = [];
 
+  let markdownFields: string[] = [];
+
   function getNestedType(field: any): string {
     let baseType = 'any';  // Default type if not found
     
@@ -120,6 +127,9 @@ export async function generateTypesForBase(baseId: string, outputPath: string): 
       
       // If a result type is specified, map it to TypeScript type
       if (result) {
+        if(result == "richText") {
+          markdownFields.push(`"${field.name}"`);
+        }
         baseType = typeMap[result] || 'any';  // Fallback to 'any' if not mapped
       }
       
@@ -135,6 +145,9 @@ export async function generateTypesForBase(baseId: string, outputPath: string): 
       
       // If a result type is specified, map it to TypeScript type
       if (result) {
+        if(result == "richText") {
+          markdownFields.push(`"${field.name}"`);
+        }
         baseType = typeMap[result] || 'any';  // Fallback to 'any' if not mapped
       }
       
@@ -172,8 +185,11 @@ export async function generateTypesForBase(baseId: string, outputPath: string): 
       } else if (field.type === 'multipleSelects') {
         tsType = getMultipleSelectType(field.options?.choices || []);
       }
-      const nameWithQuotesIfNeeded = !isAlphanumeric(field.name) ? `"${field.name}"` : field.name;
-      let fieldName = nameWithQuotesIfNeeded;
+      if(tsType == "AirtableRichText") {
+        markdownFields.push(`"${field.name}"`);
+      }
+      let fieldName = nameWithQuotesIfNeeded(field.name);
+
       if (!field.id === primaryFieldId) {
         fieldName = `${fieldName}?`;
       }
@@ -185,6 +201,8 @@ export async function generateTypesForBase(baseId: string, outputPath: string): 
       } else if (field.type === 'formula') {
         // comment += ` (Formula: ${field.options.formula})`;
       }
+
+
 
       return `  ${fieldName}: ${tsType}; ${comment}`;
     });
@@ -198,12 +216,15 @@ export async function generateTypesForBase(baseId: string, outputPath: string): 
 // This types file was generated automatically by the Airtable Types Generator on ${new Date().toLocaleString('fr-FR', { timeZone: 'Europe/Paris' })}, Paris time\n
 // Base ID: ${baseId}
 /* Tables in this file:\n - ${tables.map((t: any) => t.name).join("\n - ")} */\n
+/* Fields that are rich text: 
+${markdownFields.join(",\n")}\n*/
 /* Created types in this file: ${typesCreated.join(",\n")}\n*/
 import { Attachment, AirtableRichText } from './Airtable-FieldTypes';\n\n
+export type AirtableTypes_${baseId} = ${typesCreated.join(" | ")};\n
 export type AirtableRecordResult_${baseId} = {
   id: string;
   createdTime: string;
-  fields: ${typesCreated.join(" | ")}; 
+  fields: AirtableTypes_${baseId}; 
 }
 export type AirtableRecordsResult_${baseId} = {
     records: AirtableRecordResult_${baseId}[];
