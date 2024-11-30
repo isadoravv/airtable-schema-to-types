@@ -56,21 +56,23 @@ By default, the types will be saved in the types directory. If you want to speci
 > ```
 This command will generate TypeScript type definitions for the Airtable bases specified in the at-types.config.json file and save them in the specified directory.
 
-Configuration
+## Configuration
 The configuration file (at-types.config.json) should contain the following fields:
 
-AIRTABLE_TOKEN: Your Airtable API key.
-AIRTABLE_BASE_IDS: An array of Airtable base IDs for which you want to generate TypeScript types.
+_AIRTABLE_TOKEN_: Your Airtable API key.
+_AIRTABLE_BASE_IDS_: An array of Airtable base IDs for which you want to generate TypeScript types.
 Example configuration:
 
-json
-```
-{
-  "AIRTABLE_TOKEN": "your_api_key_here",
-  "AIRTABLE_BASE_IDS": ["base_id_1", "base_id_2"]
-}
-Contributing
+> json
+> ```
+> {
+>   "AIRTABLE_TOKEN": "your_api_key_here",
+>   "AIRTABLE_BASE_IDS": ["base_id_1", "base_id_2"]
+> }
+> ```
+
+## Contributing
 Contributions are welcome! Please open an issue or submit a pull request for any improvements or bug fixes.
 
-License
+## License
 This project is licensed under the MIT License. See the LICENSE file for details.
