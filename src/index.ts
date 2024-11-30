@@ -208,8 +208,7 @@ export type AirtableRecordResult_${baseId} = {
 export type AirtableRecordsResult_${baseId} = {
     records: AirtableRecordResult_${baseId}[];
 }
-\n
-  `;
+\n\n`;
 
   // Write all the accumulated types into one file
   const outputFilePath = path.resolve(outputPath, `Airtable-${baseId}.d.ts`);
