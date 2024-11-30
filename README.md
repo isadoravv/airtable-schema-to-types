@@ -39,9 +39,11 @@ Example configuration:
 > }
 > ```
 
-AIRTABLE_TOKEN: Your Airtable API key. Obtain it from Airtable’s API page.
-AIRTABLE_BASE_IDS: An array of Airtable base IDs for which you want to generate TypeScript types. You can find these in the URL of your base, e.g., https://airtable.com/appXXXXXXXX/tblYYYYYY.
-Usage
+_AIRTABLE_TOKEN_: Your Airtable API key. Obtain it from Airtable’s API page.
+
+_AIRTABLE_BASE_IDS_: An array of Airtable base IDs for which you want to generate TypeScript types. You can find these in the URL of your base, e.g., https://airtable.com/appXXXXXXXX/tblYYYYYY.
+
+## Usage
 To generate TypeScript types for your Airtable bases, run the following command:
 
 > bash
@@ -60,7 +62,10 @@ This command will generate TypeScript type definitions for the Airtable bases sp
 The configuration file (at-types.config.json) should contain the following fields:
 
 _AIRTABLE_TOKEN_: Your Airtable API key.
+
 _AIRTABLE_BASE_IDS_: An array of Airtable base IDs for which you want to generate TypeScript types.
+
+
 Example configuration:
 
 > json
