@@ -25,7 +25,14 @@ The Airtable TypeScript Generator is a tool that automatically generates TypeScr
 > npm install
 > ```
 
-1. Set up the configuration file:
+3. Set up the configuration file:
+
+> bash
+> ```
+> npm run postinstall
+> ```
+
+4. Update the _at-types.config.json_ file with your Airtable credentials.
 
 Create a file named at-types.config.json in the root of your project. The tool will generate it automatically if it doesn’t exist, but you can manually configure it by adding your Airtable credentials.
 
@@ -39,9 +46,9 @@ Example configuration:
 > }
 > ```
 
-_AIRTABLE_TOKEN_: Your Airtable API key. Obtain it from Airtable’s API page.
+*AIRTABLE_TOKEN*: Your Airtable API key. Obtain it from Airtable’s API page.
 
-_AIRTABLE_BASE_IDS_: An array of Airtable base IDs for which you want to generate TypeScript types. You can find these in the URL of your base, e.g., https://airtable.com/appXXXXXXXX/tblYYYYYY.
+*AIRTABLE_BASE_IDS*: An array of Airtable base IDs for which you want to generate TypeScript types. You can find these in the URL of your base, e.g., https://airtable.com/appXXXXXXXX/tblYYYYYY.
 
 ## Usage
 To generate TypeScript types for your Airtable bases, run the following command:
@@ -61,9 +68,9 @@ This command will generate TypeScript type definitions for the Airtable bases sp
 ## Configuration
 The configuration file (at-types.config.json) should contain the following fields:
 
-_AIRTABLE_TOKEN_: Your Airtable API key.
+*AIRTABLE_TOKEN*: Your Airtable API key.
 
-_AIRTABLE_BASE_IDS_: An array of Airtable base IDs for which you want to generate TypeScript types.
+*AIRTABLE_BASE_IDS*: An array of Airtable base IDs for which you want to generate TypeScript types.
 
 
 Example configuration:
