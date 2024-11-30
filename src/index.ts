@@ -69,7 +69,7 @@ export async function generateTypesForBase(baseId: string, outputPath: string): 
     headers: { Authorization: `Bearer ${AIRTABLE_TOKEN}` },
   });
   
-  const baseName = response.data.name;
+  // const baseName = response.data.name;
   const tables = response.data.tables;
   const typeMap: { [key: string]: string } = {
     singleLineText: "string",
@@ -109,7 +109,8 @@ export async function generateTypesForBase(baseId: string, outputPath: string): 
   };
   
   // Initialize a variable to accumulate all the type definitions
-  let allTypes = `// Base ID: ${baseId}\n// List of Tables: ${tables.map((t: any) => t.name).join(", ")}\n\n// This types file was generated automatically by the Airtable Types Generator on ${new Date().toLocaleString('en-GB', { timeZone: 'Europe/Paris' })}, Paris time\n\n// Imported Types\nimport { Attachment } from './Airtable-Filetypes';\n\n`;
+  let recapText = `// Base ID: ${baseId}\n// List of Tables: ${tables.map((t: any) => t.name).join(", ")}\n\n// This types file was generated automatically by the Airtable Types Generator on ${new Date().toLocaleString('en-GB', { timeZone: 'Europe/Paris' })}, Paris time\n\n// Imported Types\nimport { Attachment } from './Airtable-Filetypes';\n\n`;
+  let allTypes = "";
 
   function getNestedType(field: any): string {
     let baseType = 'any';  // Default type if not found
@@ -146,6 +147,7 @@ export async function generateTypesForBase(baseId: string, outputPath: string): 
   
     return baseType;
   }
+
         
   for (const table of tables) {
     const typeName = sanitizeTableName(table.name); // Sanitize table name to TypeScript type name
@@ -190,12 +192,13 @@ export async function generateTypesForBase(baseId: string, outputPath: string): 
     
     const typeDef = `export interface ${typeName} {\n${fields.join("\n")}\n}\n\n`; // Added double line break
     allTypes += typeDef; // Append the type definition to the accumulator
+    recapText += typeName + "\n"; // Add the type name to the recap text
   }
   
   // Write all the accumulated types into one file
   const outputFilePath = path.resolve(outputPath, `Airtable-${baseId}.d.ts`);
   console.log(`Writing all types to: ${outputFilePath}`);
-  await fs.writeFile(outputFilePath, allTypes);
+  await fs.writeFile(outputFilePath, recapText+"\n\n"+allTypes);
   
 }
 
