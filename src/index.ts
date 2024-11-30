@@ -109,7 +109,13 @@ export async function generateTypesForBase(baseId: string, outputPath: string): 
   };
   
   // Initialize a variable to accumulate all the type definitions
-  let recapText = `// Base ID: ${baseId}\n// List of Tables: ${tables.map((t: any) => t.name).join(", ")}\n\n// This types file was generated automatically by the Airtable Types Generator on ${new Date().toLocaleString('en-GB', { timeZone: 'Europe/Paris' })}, Paris time\n\n// Imported Types\nimport { Attachment } from './Airtable-Filetypes';\n\ntype AirtableRichText = string;\n\n// Created types in this file:\n/*\n`;
+  let recapText = `
+  // This types file was generated automatically by the Airtable Types Generator on ${new Date().toLocaleString('fr-FR', { timeZone: 'Europe/Paris' })}, Paris time\n
+  // Base ID: ${baseId}
+  // List of Tables: ${tables.map((t: any) => t.name).join("\n, ")}\n
+  import { Attachment } from './Airtable-Filetypes';\n\ntype AirtableRichText = string;\n
+  // Created types in this file:\n/*
+  `;
   let allTypes = "";
 
   function getNestedType(field: any): string {
